@@ -2,6 +2,7 @@ import React from 'react';
 import Topic from '../components/Topic';
 import Post from '../components/Post';
 import User from '../components/User';
+import { Link } from 'react-router';
 
 const Forum = props => (
     <div>
@@ -9,10 +10,12 @@ const Forum = props => (
             <Topic key={topic.id} data={topic}>
                 {topic.posts.map((post, postIndex) => (
                     <Post key={postIndex} data={post}>
-                        <User
-                          avatar={`images/avatar-${post.poster.id}.gif`}
-                          name={post.poster.name}
-                        />
+                        <Link to={`/user/${post.poster.id}`}>
+                            <User
+                              avatar={`images/avatar-${post.poster.id}.gif`}
+                              name={post.poster.name}
+                            />
+                        </Link>
                     </Post>
                 ))}
             </Topic>
