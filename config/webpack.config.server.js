@@ -1,15 +1,18 @@
 var path = require('path');
 var webpack = require('webpack');
+var nodeExternals = require("webpack-node-externals");
 
 module.exports = {
+    target: 'node',
+    cache: false,
     entry: [
-        path.resolve(__dirname, 'src/main/app.js')
+        path.resolve(__dirname, '../server.js')
     ],
     devtool: 'inline-source-map',
     output: {
-        path: path.resolve(__dirname, 'dist/js'),
-        filename: 'bundle.js'
+        filename: 'server.build.js'
     },
+    externals: [nodeExternals()],
     resolve: {
         extensions: ['', '.js', '.jsx']
     },
@@ -18,17 +21,24 @@ module.exports = {
             { test: /\.jsx?$/, loader: 'eslint', exclude: /node_modules/ }
         ],
         loaders: [
+            { test: /\.json$/, loaders: ['json'] },
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
                 loaders: ['react-hot', 'babel-loader']
             },
-            { test: /\.css$/, exclude: /\.global\.css$/, loader: 'style-loader!css-loader?modules&camelCase' },
+            {
+                test: /\.css$/,
+                exclude: /\.global\.css$/,
+                loaders: [
+                    'isomorphic-style-loader',
+                    'css-loader?modules&camelCase'
+                ]
+            },
             { test: /\.global\.css$/, loader: 'style-loader!css-loader' }
         ]
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
         new webpack.DefinePlugin({
             'process.env': {
@@ -40,5 +50,8 @@ module.exports = {
     eslint: {
         failOnWarning: false,
         failOnError: true
+    },
+    node: {
+        __dirname: true
     }
 };
