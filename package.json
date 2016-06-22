@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:server": "node_modules/.bin/webpack --config config/webpack.config.server-watch.js",
     "start": "npm run lint && npm run server:watch",
-    "build:client": "node_modules/.bin/webpack --watch",
-    "build:server": "node_modules/.bin/webpack --config webpack.config.server.js",
+    "build:client": "node_modules/.bin/webpack --watch --config config/webpack.config.client.js",
+    "build:server": "node_modules/.bin/webpack --config config/webpack.config.server.js",
     "server:watch": "node_modules/.bin/nodemon --watch server.js --watch src --exec npm run start:server",
     "lint": "node_modules/.bin/eslint server.js src"
   },
