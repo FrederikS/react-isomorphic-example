@@ -1,6 +1,8 @@
 {
   "presets": [
     "es2015",
-    "react"
-  ]
+    "react",
+    "stage-1"
+  ],
+  "plugins": ["syntax-decorators", "transform-decorators-legacy"]
 }

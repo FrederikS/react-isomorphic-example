@@ -1,13 +1,13 @@
 import React from 'react';
-import Topic from '../components/Topic';
+import TopicView from '../components/TopicView';
 import Post from '../components/Post';
 import User from '../components/User';
 import { Link } from 'react-router';
 
 const Forum = props => (
     <div>
-        {props.topics.map(topic => (
-            <Topic key={topic.id} data={topic}>
+        {props.topicStore.topics.map(topic => (
+            <TopicView key={topic.id} topic={topic}>
                 {topic.posts.map((post, postIndex) => (
                     <Post key={postIndex} data={post}>
                         <Link to={`/user/${post.poster.id}`}>
@@ -18,17 +18,13 @@ const Forum = props => (
                         </Link>
                     </Post>
                 ))}
-            </Topic>
+            </TopicView>
         ))}
     </div>
 );
 
 Forum.propTypes = {
-    topics: React.PropTypes.arrayOf(React.PropTypes.object)
-};
-
-Forum.defaultProps = {
-    topics: []
+    topicStore: React.PropTypes.object.isRequired
 };
 
 export default Forum;
