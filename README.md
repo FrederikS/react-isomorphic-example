@@ -7,4 +7,4 @@ npm run build:client
 npm start
 ```
 
-Switch to Browser and enter http://localhost:3000
+Switch to Browser and enter `http://localhost:3000`
