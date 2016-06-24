@@ -5,4 +5,4 @@ npm-debug.log
 dist
 target
 server.build.js
-server.api.build.js
+external/server.api.build.js

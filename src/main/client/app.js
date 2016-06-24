@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import WithStylesContext from './container/WithStylesContext';
+import WithStylesContext from '../common/container/WithStylesContext';
 import { Router, browserHistory } from 'react-router';
-import routes from './config/routes';
+import routes from '../common/config/routes';
 
 ReactDOM.render(
     /*eslint-disable*/

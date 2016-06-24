@@ -6,7 +6,8 @@ module.exports = {
     target: 'node',
     cache: false,
     entry: [
-        path.resolve(__dirname, '../server.js')
+        'babel-polyfill',
+        path.resolve(__dirname, '../src/main/server/server.js')
     ],
     devtool: 'inline-source-map',
     output: {

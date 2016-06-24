@@ -12,7 +12,7 @@
     "build:server": "node_modules/.bin/webpack --config config/webpack.config.server.js",
     "build:api": "node_modules/.bin/webpack --config config/webpack.config.server.api.js",
     "server:watch": "node_modules/.bin/nodemon --watch server.js --watch src --exec npm run start:server",
-    "lint": "node_modules/.bin/eslint server.js src"
+    "lint": "node_modules/.bin/eslint src"
   },
   "keywords": [
     "isomorphic",
@@ -52,6 +52,7 @@
     "webpack-shell-plugin": "^0.4.2"
   },
   "dependencies": {
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "isomorphic-fetch": "^2.2.1"
   }
 }
