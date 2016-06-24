@@ -4,6 +4,7 @@ import { RouterContext } from 'react-router';
 import ContextProvider from '../../common/container/ContextProvider';
 import Layout from '../Layout';
 import fetchComponentData from './fetchComponentData';
+import dehydrate from './dehydrate';
 
 export default function (store, renderProps) {
     return new Promise((resolve, reject) => {
@@ -22,7 +23,11 @@ export default function (store, renderProps) {
                         <RouterContext {...renderProps} />
                     </ContextProvider>
                 );
-                resolve(Layout.render({ content, css: Array.from(css).join('') }));
+                resolve(Layout.render({
+                    content,
+                    css: Array.from(css).join(''),
+                    state: dehydrate({ store })
+                }));
             }).catch(error => reject(error));
     });
 }

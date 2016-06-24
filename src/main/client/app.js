@@ -1,13 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import WithStylesContext from '../common/container/WithStylesContext';
+import ContextProvider from '../common/container/ContextProvider';
 import { Router, browserHistory } from 'react-router';
 import routes from '../common/config/routes';
+import rehydrate from './utils/rehydrate';
+
+const store = rehydrate(window.__STATE__); // eslint-disable-line no-underscore-dangle
 
 ReactDOM.render(
-    /*eslint-disable*/
-    <WithStylesContext onInsertCss={styles => styles._insertCss()}>{/*eslint-enable*/}
+    /* eslint-disable no-underscore-dangle */
+    <ContextProvider context={{ store, insertCss: styles => styles._insertCss() }}>
+    {/* eslint-enable */}
         <Router history={browserHistory} routes={routes} />
-    </WithStylesContext>,
+    </ContextProvider>,
     document.getElementById('app')
 );
