@@ -20,7 +20,6 @@ class Forum extends React.Component {
     }
 
     render() {
-        console.log('Forum render');
         const { store: topicStore } = this.context;
         return (
             <div>
