@@ -5,7 +5,7 @@ import fetch from 'isomorphic-fetch';
 class App extends React.Component {
 
     static fetchData(store) {
-        return fetch('http://localhost:8080/topics')
+        return fetch('http://localhost:3001/topics')
             .then(response => response.json())
             .then(topics => {
                 topics.forEach(topic => store.addTopic(topic));
