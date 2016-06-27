@@ -1,21 +1,7 @@
 import React from 'react';
 import Forum from './Forum';
-import fetch from 'isomorphic-fetch';
 
-class App extends React.Component {
-
-    static fetchData(store) {
-        return fetch('http://localhost:3001/topics')
-            .then(response => response.json())
-            .then(topics => {
-                topics.forEach(topic => store.addTopic(topic));
-            });
-    }
-
-    // componentDidMount() {
-    //     App.fetchData(this.context.store);
-    // }
-
+class App extends React.Component { // eslint-disable-line react/prefer-stateless-function
     render() {
         return <Forum topicStore={this.context.store} />;
     }

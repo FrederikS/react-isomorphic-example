@@ -1,9 +1,10 @@
 import express from 'express';
 import data from '../data/forum.json';
+import cors from 'cors';
 
 const server = express();
 
-server.get('/topics', (req, res) => {
+server.get('/topics', cors(), (req, res) => {
     res.status(200).json(data.topics);
 });
 

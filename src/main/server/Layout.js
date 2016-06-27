@@ -11,7 +11,7 @@ export default {
             </head>
             <body>
                 <main id="app">${content}</main>
-                <script type="text/javascript" src="dist/js/bundle.js" /></script>
+                <script type="text/javascript" src="/dist/js/bundle.js" /></script>
             </body>
         </html>`
 };

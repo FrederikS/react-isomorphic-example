@@ -1,10 +1,14 @@
 import React from 'react';
 import User from '../components/User';
+import { IndexLink } from 'react-router';
 
 const UserView = props => {
     const { userId } = props.params;
     return (
-        <User avatar={`/images/avatar-${userId}.gif`} />
+        <div>
+            <User avatar={`/images/avatar-${userId}.gif`} />
+            <IndexLink to="/">back</IndexLink>
+        </div>
     );
 };
 
