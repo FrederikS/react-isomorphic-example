@@ -3,7 +3,7 @@ import { observable } from 'mobx';
 export default class Topic {
     id;
     subject;
-    posts = [];
+    @observable posts = [];
     @observable expanded = true;
 
     constructor(id, subject, posts) {

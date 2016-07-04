@@ -2,6 +2,7 @@ import React from 'react';
 import TopicView from '../components/TopicView';
 import Post from '../components/Post';
 import User from '../components/User';
+import PostForm from '../components/PostForm';
 import { Link } from 'react-router';
 import { observer } from 'mobx-react';
 import fetch from 'isomorphic-fetch';
@@ -12,7 +13,7 @@ class Forum extends React.Component {
     static fetchData(store) {
         return fetch('http://localhost:3001/topics')
             .then(response => response.json())
-            .then(topics => store.addTopics(topics));
+            .then(topics => store.initializeWith(topics));
     }
 
     componentDidMount() {
@@ -35,6 +36,7 @@ class Forum extends React.Component {
                                 </Link>
                             </Post>
                         ))}
+                        <PostForm topic={topic} />
                     </TopicView>
                 ))}
             </div>
