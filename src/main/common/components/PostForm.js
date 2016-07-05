@@ -1,5 +1,7 @@
 import React from 'react';
 import { action } from 'mobx';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import styles from './styles.css';
 
 class PostForm extends React.Component {
 
@@ -11,32 +13,29 @@ class PostForm extends React.Component {
     @action
     _handlePost(e) {
         e.preventDefault();
-        const post = this._createPostFor(this.refs.message.value);
-        this.context.store.addPost(this.props.topic, post);
-    }
-
-    _createPostFor(message) {
-        const dateOptions = {
-            day: 'numeric',
-            month: 'long',
-            hour: '2-digit',
-            minute: '2-digit'
-        };
-        return {
-            message,
-            date: new Date().toLocaleString('de-De', dateOptions),
-            poster: {
-                name: 'ChubberGhouly',
-                id: 2314
+        this.context.router.push({
+            pathname: 'addPost',
+            query: {
+                topicId: this.props.topic.id,
+                message: this.refs.message.value
+            },
+            state: {
+                onSuccess: (post) => {
+                    this.props.topic.posts.push(post);
+                }
             }
-        };
+        });
+        this.refs.message.value = '';
     }
 
     render() {
         return (
-            <form method="POST">
-                <textarea ref="message"></textarea>
-                <input type="submit" onClick={this.handlePost} value="send" />
+            <form action="/addPost" onSubmit={this.handlePost}>
+                <input type="hidden" name="topicId" value={this.props.topic.id} />
+                <div className={styles.areaWrapper}>
+                    <textarea className={styles.textarea} name="message" ref="message"></textarea>
+                </div>
+                <button className={styles.sendButton} type="submit">send</button>
             </form>
         );
     }
@@ -48,7 +47,7 @@ PostForm.propTypes = {
 };
 
 PostForm.contextTypes = {
-    store: React.PropTypes.object.isRequired
+    router: React.PropTypes.object.isRequired
 };
 
-export default PostForm;
+export default withStyles(styles)(PostForm);
