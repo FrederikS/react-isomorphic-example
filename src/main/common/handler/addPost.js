@@ -1,21 +1,14 @@
 import { addPostToTopic } from '../api/post-api';
+import moment from 'moment';
 
-const createPostFor = (message) => {
-    const dateOptions = {
-        day: 'numeric',
-        month: 'long',
-        hour: '2-digit',
-        minute: '2-digit'
-    };
-    return {
-        message,
-        date: new Date().toLocaleString('de-De', dateOptions),
-        poster: {
-            name: 'ChubberGhouly',
-            id: 2314
-        }
-    };
-};
+const createPostFor = (message) => ({
+    message,
+    date: moment().format('d. MMM h:mm'),
+    poster: {
+        name: 'ChubberGhouly',
+        id: 2314
+    }
+});
 
 export default function (nextState, replace, callback) {
     const { message, topicId } = nextState.location.query;
