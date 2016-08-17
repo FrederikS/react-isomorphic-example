@@ -1,7 +1,6 @@
 import fetch from 'isomorphic-fetch';
+import addTopics from './addTopics';
 
-export default () => ({
-    type: 'FETCH_TOPICS',
-    payload: fetch('http://localhost:3001/topics')
-        .then(response => response.json())
-});
+export default () => dispatch => fetch('http://localhost:3001/topics')
+    .then(response => response.json())
+    .then(topics => dispatch(addTopics(topics)));

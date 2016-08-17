@@ -8,10 +8,8 @@ const getUpdatedState = ({ state, topicIndex, updatedTopic }) => Object.assign({
 
 export default (state = {}, action) => {
     switch (action.type) {
-        case 'FETCH_TOPICS_PENDING':
-            return Object.assign({}, state, { topics: [] });
-        case 'FETCH_TOPICS_FULFILLED':
-            return Object.assign({}, state, { topics: action.payload });
+        case 'ADD_TOPICS':
+            return Object.assign({}, state, { topics: action.topics });
         case 'TOGGLE_TOPIC': {
             const topicIndex = state.topics.findIndex(topic => topic.id === action.topicId);
             const toggledTopic = Object.assign({}, state.topics[topicIndex], {
@@ -23,12 +21,10 @@ export default (state = {}, action) => {
                 updatedTopic: toggledTopic
             });
         }
-        case 'ADD_POST_PENDING':
-            return state;
-        case 'ADD_POST_FULFILLED': {
-            const topicIndex = state.topics.findIndex(topic => topic.id === action.meta.topicId);
+        case 'ADD_POST': {
+            const topicIndex = state.topics.findIndex(topic => topic.id === action.topicId);
             const topicWithNewPost = Object.assign({}, state.topics[topicIndex], {
-                posts: state.topics[topicIndex].posts.concat([action.payload])
+                posts: state.topics[topicIndex].posts.concat([action.post])
             });
             return getUpdatedState({
                 state,
