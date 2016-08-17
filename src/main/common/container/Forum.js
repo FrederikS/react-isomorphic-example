@@ -10,12 +10,12 @@ import toggleTopic from '../actions/toggleTopic';
 
 class Forum extends React.Component {
 
-    static fetchData() {
-        return fetchTopics();
+    static fetchData(dispatch) {
+        return dispatch(fetchTopics());
     }
 
     componentDidMount() {
-        // Forum.fetchData(this.context.store);
+        Forum.fetchData(this.context.store.dispatch);
     }
 
     render() {
