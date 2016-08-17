@@ -1,23 +1,15 @@
-import { addPostToTopic } from '../api/post-api';
-import moment from 'moment';
+import addPost from '../actions/addPost';
+import fetchTopics from '../actions/fetchTopics';
 
-const createPostFor = (message) => ({
-    message,
-    date: moment().format('d. MMM h:mm'),
-    poster: {
-        name: 'ChubberGhouly',
-        id: 2314
-    }
-});
-
-export default function (nextState, replace, callback) {
-    const { message, topicId } = nextState.location.query;
-    const { onSuccess = () => {} } = nextState.location.state || {};
-    const post = createPostFor(message);
-    addPostToTopic(topicId, post)
-        .then(() => {
-            onSuccess(post);
-            replace('/');
-            callback();
-        });
+export default function (dispatch) {
+    return (nextState, replace, callback) => {
+        const { message, topicId } = nextState.location.query;
+        dispatch(fetchTopics())
+            .then(() => dispatch(addPost({ text: message, topicId: parseInt(topicId, 10) })))
+            .then(() => {
+                replace('/');
+                callback();
+            })
+            .catch((e) => console.log(e)); // eslint-disable-line no-console
+    };
 }

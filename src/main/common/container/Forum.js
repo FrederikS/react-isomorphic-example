@@ -1,31 +1,29 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import TopicView from '../components/TopicView';
 import Post from '../components/Post';
 import User from '../components/User';
 import PostForm from '../components/PostForm';
 import { Link } from 'react-router';
-import { observer } from 'mobx-react';
-import fetch from 'isomorphic-fetch';
+import fetchTopics from '../actions/fetchTopics';
+import toggleTopic from '../actions/toggleTopic';
 
-@observer
 class Forum extends React.Component {
 
-    static fetchData(store) {
-        return fetch('http://localhost:3001/topics')
-            .then(response => response.json())
-            .then(topics => store.initializeWith(topics));
+    static fetchData() {
+        return fetchTopics();
     }
 
     componentDidMount() {
-        Forum.fetchData(this.context.store);
+        // Forum.fetchData(this.context.store);
     }
 
     render() {
-        const { store: topicStore } = this.context;
+        const { topics, onTopicClick } = this.props;
         return (
             <div>
-                {topicStore.topics.map(topic => (
-                    <TopicView key={topic.id} topic={topic}>
+                {topics.map(topic => (
+                    <TopicView key={topic.id} topic={topic} onClick={onTopicClick}>
                         {topic.posts.map((post, postIndex) => (
                             <Post key={postIndex} data={post}>
                                 <Link to={`/user/${post.poster.id}`}>
@@ -44,8 +42,22 @@ class Forum extends React.Component {
     }
 }
 
+Forum.propTypes = {
+    topics: React.PropTypes.array,
+    onTopicClick: React.PropTypes.func
+};
+
+Forum.defaultProps = {
+    topics: []
+};
+
 Forum.contextTypes = {
     store: React.PropTypes.object.isRequired
 };
 
-export default Forum;
+export default connect(
+    state => ({ topics: state.topics }),
+    dispatch => ({
+        onTopicClick: (topicId) => dispatch(toggleTopic(topicId))
+    })
+)(Forum);

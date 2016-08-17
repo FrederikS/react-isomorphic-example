@@ -1,5 +1,4 @@
 import React from 'react';
-import { action } from 'mobx';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './styles.css';
 
@@ -10,34 +9,35 @@ class PostForm extends React.Component {
         this.handlePost = (e) => this._handlePost(e);
     }
 
-    @action
     _handlePost(e) {
         e.preventDefault();
+        e.stopPropagation();
         this.context.router.push({
             pathname: 'addPost',
             query: {
                 topicId: this.props.topic.id,
-                message: this.refs.message.value
-            },
-            state: {
-                onSuccess: (post) => {
-                    this.props.topic.posts.push(post);
-                }
+                message: this.textArea.value
             }
         });
-        this.refs.message.value = '';
+        this.textArea.value = '';
     }
 
     render() {
+        /* eslint-disable no-return-assign */
         return (
             <form action="/addPost" onSubmit={this.handlePost}>
                 <input type="hidden" name="topicId" value={this.props.topic.id} />
                 <div className={styles.areaWrapper}>
-                    <textarea className={styles.textarea} name="message" ref="message"></textarea>
+                    <textarea
+                      className={styles.textarea}
+                      name="message"
+                      ref={(ele) => this.textArea = ele}
+                    />
                 </div>
                 <button className={styles.sendButton} type="submit">send</button>
             </form>
         );
+        /* eslint-enable no-return-assign */
     }
 
 }
